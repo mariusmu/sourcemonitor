@@ -21,13 +21,12 @@ private:
 
 	HangmanGame();
 	HangmanGame( const HangmanGame & );
-	HangmanGame & operator=( const HangmanGame & );
+	HangmanGame & operator = ( const HangmanGame & );
 
 	static HangmanGame *hangmanGame;
 
 
 	enum InputCommand { letterGuess, quit, restart, top, help, invalid };
-
 
 	void PlayAGame();
 
@@ -44,9 +43,6 @@ private:
 
 
 
-
-
-	
 	
 
 	Scoreboard & board;
