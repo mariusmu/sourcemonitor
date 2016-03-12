@@ -2,8 +2,8 @@
 #include <string>
 
 SecretWord::SecretWord(const std::string & secretWord)
-    : decodedWord(secretWord),
-    encodedWord(secretWord.size(), '_')
+	: decodedWord(secretWord),
+	encodedWord(secretWord.size(), '_')
 {
 
 }
@@ -11,80 +11,69 @@ SecretWord::SecretWord(const std::string & secretWord)
 char SecretWord::RevealNextLetter()
 {
 
-    for (std::string::size_type letter = 0; letter != encodedWord.size(); ++letter)
-    {
-        if (encodedWord[letter] == '_')
-        {
-                {
-                        {
-                                {
-                                    RevealLetter(decodedWord[letter]);
-                                }
-                        }
-                }
+	for (std::string::size_type letter = 0; letter != encodedWord.size(); ++letter)
+	{
+		if (encodedWord[letter] == '_')
+		{
 
-            return decodedWord[letter];
-        }
-    }
+			RevealLetter(decodedWord[letter]);
+		}
+
+		return decodedWord[letter];
+
+	}
 }
 int SecretWord::RevealLetter(char letterToReveal)
 {
-    int letterOccurenceCount = 0;
-    for (std::string::size_type letter = 0; letter != decodedWord.size(); ++letter)
-    {
-        if (decodedWord[letter] == letterToReveal)
-        {
-                {
-                        {
-                                {
-                                    encodedWord[letter] = letterToReveal;
-                                }
-                        }
-                }
-            ++letterOccurenceCount;
-        }
-    }
-    return letterOccurenceCount;
+	int letterOccurenceCount = 0;
+	for (std::string::size_type letter = 0; letter != decodedWord.size(); ++letter)
+	{
+		if (decodedWord[letter] == letterToReveal)
+		{
+
+			encodedWord[letter] = letterToReveal;
+		}
+
+		++letterOccurenceCount;
+	}
+
+	return letterOccurenceCount;
 }
 
 bool SecretWord::HasLetter(char wordLetter) const
 {
-    for (std::string::size_type letter = 0; letter != decodedWord.size(); ++letter)
-    {
-        if (decodedWord[letter] == wordLetter)
-        {
-                {
-                        {
-                            return true;
-                        }
-                }
-        }
-    }
+	for (std::string::size_type letter = 0; letter != decodedWord.size(); ++letter)
+	{
+		if (decodedWord[letter] == wordLetter)
+		{
 
-    return false;
+			return true;
+		}
+
+	}
+
+	return false;
 }
 bool SecretWord::IsRevealed() const
 {
-    for (std::string::size_type letter = 0; letter != encodedWord.size(); ++letter)
-    {
-        if (encodedWord[letter] == '_')
-        {
-                {
-                        {
-                            return false;
-                        }
-                }
-        }
-    }
+	for (std::string::size_type letter = 0; letter != encodedWord.size(); ++letter)
+	{
+		if (encodedWord[letter] == '_')
+		{
 
-    return true;
+			return false;
+		}
+
+	}
+
+	return true;
 }
 
 const std::string & SecretWord::Decoded()
 {
-    return decodedWord;
+	return decodedWord;
 }
 const std::string & SecretWord::Encoded()
 {
-    return encodedWord;
+	return encodedWord;
 }
