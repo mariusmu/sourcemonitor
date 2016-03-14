@@ -351,20 +351,25 @@ HangmanGame::InputCommand HangmanGame::GetInput(char & guessedLetter) const
 	//Get input from the user
 	std::getline(std::cin, input);
 	
+    //If this input could be inteperated as a guess from the user
 	if (input.size() == 1 && islower(input[0])) {
 
 		//Then set the guessed letter to be the first character
 		guessedLetter = input[0];
 
+        //Return the letter guessed
 		return letterGuess;
 	}	
 
+    //Find the correct command enum in the map
 	InputCommand m = commands.at(input);
-	if (m == NULL) {
 
+    //If no enum were found, return invalid
+	if (m == NULL) {
 		return invalid;
 	}
 
+    //Return the enum
 	return m;
 	
 }
