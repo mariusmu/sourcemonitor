@@ -95,6 +95,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="SecretWord.cpp" />
+    <ClCompile Include="TestC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HangmanGame.h" />

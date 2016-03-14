@@ -27,9 +27,13 @@ HangmanGame & HangmanGame::InitHangmanGame()
 HangmanGame::HangmanGame()
 	: board(Scoreboard::InitScoreboard(5)),
 	secretWord(".")
+
 {
+
+
 	//Initialize the wordContainer (vector)
 	InitWordsContainer();
+	InitMap();
 
 }
 
@@ -37,6 +41,14 @@ HangmanGame::HangmanGame()
 	Initialize the wordscontainer with a suitable number of secret words
 	Will use a vector to store the words
 */
+
+void HangmanGame::InitMap() {
+	commands["top"] = top;
+	commands["exit"] = quit;
+	commands["restart"] = restart;
+	commands["help"] = help;
+}
+
 void HangmanGame::InitWordsContainer()
 {
 	//push the secret word "computer" to the container
@@ -118,7 +130,6 @@ void HangmanGame::GameFinish(int mistakesCount, bool cheated) {
 
 	//If the user did not cheat, than print the greeting and sign the user in to the scoreboard
 	else {
-		//Print a greeting
 		std::cout << "You won with "
 			<< mistakesCount
 			<< " mistakes.\n";
@@ -158,7 +169,6 @@ int HangmanGame::Reveal(SecretWord & secretWord, char guessedLetter, int & mista
 		//If the secret word has not been completely revealed, then procceed
 		else
 		{
-			//Print a the letters revealed in the round
 			std::cout << "Good job! You revealed "
 				<< letterOccurenceCount
 				<< " letter"
@@ -166,7 +176,7 @@ int HangmanGame::Reveal(SecretWord & secretWord, char guessedLetter, int & mista
 				<< (letterOccurenceCount > 1 ? "s" : "")
 				<< ".\n";
 
-			//Then print the word as is
+			//Then print the word as is for now
 			PrintSecretWord();
 		}
 
@@ -178,7 +188,6 @@ int HangmanGame::Reveal(SecretWord & secretWord, char guessedLetter, int & mista
 		//Increase the mistakes count
 		++mistakesCount;
 		
-		//Print an information message
 		std::cout << "Sorry! There are no unrevealed letters \'" << guessedLetter << "\'.\n";
 		
 		//Then print the word as is for now
@@ -193,19 +202,14 @@ int HangmanGame::Reveal(SecretWord & secretWord, char guessedLetter, int & mista
 */
 void HangmanGame::PlayAGame()
 {
-	//Reset the secret word
 	ResetSecretWord();
 
-	//Print the welcome greeting message
 	PrintWelcomeMessage();
 
-	//Reset the restart status
 	bool restartRequested = false;
 
-	//Set the playerCheated as fale
 	bool playerCheated = false;
 
-	//Reset the mistakes count
 	int mistakesCount = 0;
 
 	//Print the secret word 
@@ -257,7 +261,6 @@ void HangmanGame::PlayAGame()
 			//if invalid
 			case invalid:
 				
-				//Print a message telling the input was invalid
 				std::cout << "Incorrect guess or command!\n";
 				
 				//Print the current status of the secret word
@@ -272,7 +275,8 @@ void HangmanGame::PlayAGame()
 				Reveal(secretWord, guessedLetter, mistakesCount, playerCheated);
 				
 				//if the secret word is returned then return, otherwise continue
-				if (secretWord.IsRevealed) return;
+				
+				if (secretWord.IsRevealed()) return;
 				
 				break;
 			}
@@ -317,7 +321,6 @@ void HangmanGame::PrintWelcomeMessage()
 */
 void HangmanGame::PrintSecretWord()
 {
-	//Print the first part of the secret word output
 	std::cout << "The secret word is: ";
 
 	//For each letter in the word
@@ -327,7 +330,6 @@ void HangmanGame::PrintSecretWord()
 		std::cout << secretWord.Encoded()[letter] << " ";
 	}
 
-	//Print a newline
 	std::cout << std::endl;
 
 }
@@ -339,6 +341,7 @@ void HangmanGame::PrintSecretWord()
 */
 HangmanGame::InputCommand HangmanGame::GetInput(char & guessedLetter) const
 {
+
 	//Ask the user for a command
 	std::cout << "Enter your guess or command: ";
 
@@ -347,48 +350,23 @@ HangmanGame::InputCommand HangmanGame::GetInput(char & guessedLetter) const
 
 	//Get input from the user
 	std::getline(std::cin, input);
-
-	//If the input is top
-	if (input == "top")
-	{
-		//then return the top enum
-		return top;
-
-	}
-	//if the input is exit
-	else if (input == "exit")
-	{
-		//then return the exit enum
-		return quit;
-
-	}
-
-	//if the input is restart
-	else if (input == "restart")
-	{
-		return restart;
-	}
-
-	//if the user is help
-	else if (input == "help")
-	{
-		return help;
-
-	}
-	//If the input size is 1 long, and the first character is lowercase
-	else if (input.size() == 1 && islower(input[0])) {
+	
+	if (input.size() == 1 && islower(input[0])) {
 
 		//Then set the guessed letter to be the first character
 		guessedLetter = input[0];
 
 		return letterGuess;
-	}
+	}	
 
-	//if not
-	else
-	{
+	InputCommand m = commands.at(input);
+	if (m == NULL) {
+
 		return invalid;
 	}
+
+	return m;
+	
 }
 
 

@@ -7,6 +7,8 @@
 //Include the vector definition
 #include <vector>
 
+#include <map>
+
 //Include the string definition
 #include <string>
 
@@ -71,7 +73,9 @@ private:
 
 	*/
 	enum InputCommand { letterGuess, quit, restart, top, help, invalid };
+	std::map< std::string, InputCommand > commands;
 
+	void InitMap();
 	//Start playing the game.
 	void PlayAGame();
 
